@@ -6,6 +6,7 @@ user float wt_offset = 1.0;
 user float wt_walldetection = 1.0;
 user float wt_walllowering = 8.0;
 user float wt_lowering_intensity = 1.0;
-
+server float sv_leanangle = 22.5;
+user bool cl_strafelean = false;
 user bool wt_cap = true;
 user bool wt_debug = false;

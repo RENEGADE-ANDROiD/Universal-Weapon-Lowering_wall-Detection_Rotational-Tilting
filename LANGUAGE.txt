@@ -1,6 +1,6 @@
 [enu default]
-UWT_TITL = "Universal Weapon Lowering, Wall-Detection & Rotational-Tilting";
-UWT_TIT2 = "Weapon Lowering, Tilt Strafe Rotate"
+UWT_TITL = "Universal Tacticool";
+UWT_TIT2 = "Universal Tacticool"
 
 UWT_VELOCITY = "Velocity";
 UWT_RESISTANCE = "Resistance";

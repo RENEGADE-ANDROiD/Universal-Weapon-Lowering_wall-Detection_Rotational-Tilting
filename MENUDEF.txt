@@ -1,6 +1,7 @@
 OptionMenu "WeaponTiltOptions" 
 {
 	Title "$UWT_TITL"
+    StaticText "Universal Lean, Weapon Lowering, Wall-Detection & Rotational-Tilting", gold
    
     StaticText ""
 
