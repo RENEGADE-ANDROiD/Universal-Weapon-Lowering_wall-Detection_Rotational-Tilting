@@ -1,6 +1,12 @@
-# Universal Lean, Weapon Lowering, Wall Detection & Rotational Tilting
+# Universal Tacticool Doom
+<img width="1600" height="900" alt="tacticooldoommenu" src="https://github.com/user-attachments/assets/ffcbd851-82c0-4e55-bfb9-2594e47d2740" />
 
-An experimental fork of https://github.com/generic-name-guy/universal-weapon-tilt-gz by Generic Name Guy.
+![Demo](https://github.com/user-attachments/assets/da298b17-2e7f-4f65-b9f8-cc652790a157)
+
+![Demo](https://github.com/user-attachments/assets/e076bdfb-aff8-43e7-8e1d-76392514b812)
+
+
+An experimental fork of 'Universal-Weapon-Tilt-GZ' by Generic Name Guy.
 This branch adds code made by Dithered Output, maker of Siren, that adds Weapon Lowering when tilting and Wall Detection.  Also included is a trimmed down version of Immerse Lean (excluding Tilt++ and Universal Weapon Sway, as those are commonly found in many mods already) that includes modified version of the lean keybinds that allow you to move slowly while peeking around corners.  Lean code written by Joshua Hard (josh771).
 
 Includes a customized menu with slider options for everything.
