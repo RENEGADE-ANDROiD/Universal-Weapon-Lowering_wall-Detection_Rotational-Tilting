@@ -66,6 +66,19 @@ class WeaponTilterInventory : Inventory
     }
 
     // ------------------------------------------------------------
+    // Gating: is PSP_WEAPON's state in a typical idle/ready loop? (Fires, reload, respect, etc. are not in this tree.)
+    private bool IsWeaponReadyForTilt(Weapon weap, PSprite psp)
+    {
+        if (!weap || !psp) return true;
+
+        State st = weap.FindState("Ready");
+        if (!st) st = weap.FindState("Hold");
+        if (!st) return true; // do not break weapons that omit standard labels
+
+        // first arg: state to test; second: first state of the sequence
+        return weap.InStateSequence(psp.curState, st);
+    }
+
     // Helper: check if weapon is scoped
     private bool IsScoped()
     {
@@ -187,12 +200,33 @@ class WeaponTilterInventory : Inventory
             wallDetection = cvar.getcvar("wt_walldetection", owner.player).getbool();
         }
 
+        // --- Weapon tilt: optional gating (moving / idle "Ready" only) reduces fights with per-state offsets ---
+        let wpn = owner.player.readyWeapon;
+        bool opt_tilt_moving = cvar.getcvar("wt_tilt_moving", owner.player).getbool();
+        double opt_tilt_moving_min = cvar.getcvar("wt_tilt_moving_min", owner.player).getfloat();
+        bool opt_tilt_ready = cvar.getcvar("wt_tilt_ready", owner.player).getbool();
+
+        bool allowStrafeTilt = true;
+        if (opt_tilt_moving)
+        {
+            double horz = sqrt(owner.vel.x * owner.vel.x + owner.vel.y * owner.vel.y);
+            allowStrafeTilt = allowStrafeTilt && (horz > opt_tilt_moving_min);
+        }
+        if (opt_tilt_ready && wpn)
+            allowStrafeTilt = allowStrafeTilt && IsWeaponReadyForTilt(Weapon(wpn), weaponsprite);
+
         // --- Weapon tilt calculation (original) ---
         aVelocity = atan2(owner.vel.y, owner.vel.x);
         direction = (sin(-owner.angle), cos(-owner.angle));
         velocityUnit = owner.vel.xy;
-        currentRoll += (velocityUnit dot direction) * rVelocity;
-        currentRoll *= rResistance;
+        if (allowStrafeTilt)
+        {
+            currentRoll += (velocityUnit dot direction) * rVelocity;
+            currentRoll *= rResistance;
+        }
+        else
+            currentRoll *= 0.75; // decay toward 0 when fire/reload/stand or not moving, avoids snapping
+
         crABS = abs(currentRoll);
 
         // ======================== LEANING SYSTEM ========================
